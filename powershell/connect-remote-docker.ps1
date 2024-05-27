@@ -153,7 +153,7 @@ if ((Get-Service -Name ssh-agent).Status -eq "Running"){
     Write-Host "Serviço ssh não está ativo..."
     Write-Host "Checando a instalação..."
     Write-Host "Isto requer elevação de nível para administrador..."
-    installOpenSSHClient
+    InstallOpenSSHClient
 }
 
 # Criando as pastas para o par de chaves
