@@ -22,20 +22,6 @@ function InstallOpenSSHClient {
     
 }
 
-function InformacoesAdicionais {
-
-    Write-Host "Envie a chave pública ao administrador do servidor para adicionar no host que irá se conectar"
-    Write-Host "A chave pública de ser adicionada ao .ssh/authorized_keys do servidor, use o comando sudo nano .ssh/authorized_keys"
-    Write-Host
-    Write-Host "Certifiquei-se de que seu usuário tem permissão de acesso aos comandos docker: sudo usermod -aG docker `$(whoami)"
-    Write-Host
-    Write-Host "Para usar no VSCODE instale as extensções abaixo"
-    Write-Host "Para executar este script, você precisará das seguintes extensões VSCode:"
-    Write-Host "  1. Remote Containers: ms-vscode-remote.remote-containers"
-    Write-Host "  2. Remote SSH: ms-vscode-remote.remote-ssh"
-    
-}
-
 function HabilitaInicializacaoDoServicoSSH {
     
     # Perguntar ao usuário se ele deseja iniciar o serviço ssh-agent automaticamente
@@ -140,6 +126,20 @@ function GerarParDeChave {
     
 }
 
+function InformacoesAdicionais {
+
+    Write-Host "Envie a chave pública ao administrador do servidor para adicionar no host que irá se conectar"
+    Write-Host "A chave pública de ser adicionada ao .ssh/authorized_keys do servidor, use o comando sudo nano .ssh/authorized_keys"
+    Write-Host
+    Write-Host "Certifiquei-se de que seu usuário tem permissão de acesso aos comandos docker: sudo usermod -aG docker `$(whoami)"
+    Write-Host
+    Write-Host "Para usar no VSCODE instale as extensções abaixo"
+    Write-Host "Para executar este script, você precisará das seguintes extensões VSCode:"
+    Write-Host "  1. Remote Containers: ms-vscode-remote.remote-containers"
+    Write-Host "  2. Remote SSH: ms-vscode-remote.remote-ssh"
+    
+}
+
 # Verificar as dependencias, openshh e docker
 
 Write-Host "Verificando se o OpenSSH.Client está ativo"
@@ -162,11 +162,13 @@ CriarPastaSsh
 
 GerarParDeChave
 
+# Teste de conexão ssh
 $servidorRemoto = Read-Host "Informe o ip do servidor remoto: "
 
 Write-Host "Verifiando a conexão ssh com o servidor remoto"
 VerificaConexaoSSH -ServidorRemoto $servidorRemoto
 
+# Criando o docker context
 Write-Host "Criando uma conexão com o contexto docker"
 CriarDockerContext -dockerRemoteUserName $env:USERNAME -remoteHostWithPort $servidorRemoto
 
